@@ -17,7 +17,6 @@ int fill_arrray(Abiturient* arr) {
 	string birth;
 
 	Abiturient ab;
-
 	int index = 0;
 	while (in >> part_name) {
 		ab.name = part_name;
@@ -51,6 +50,7 @@ void print_scores(Abiturient* arr, int n) {
 		cout << arr[i].sum_score << endl;
 	}
 }
+
 void output_students(Abiturient* arr) {
 	int count;
 	ofstream out;
@@ -63,17 +63,16 @@ void output_students(Abiturient* arr) {
 		out << arr[index].name + " " + arr[index].birth + " " << arr[index].sum_score << endl;
 		index++;
 	}
-	last_score = arr[index].sum_score;
+	last_score = arr[index - 1].sum_score;
 	out.close();
-	if (last_score == arr[index + 1].sum_score) {
-		cout << "extra list is created";
+	if (last_score == arr[index].sum_score) {
+		cout << "extra list is created" << endl;
 		ofstream extraout;
 		extraout.open("extra.txt");
-		while (last_score == arr[index + 1].sum_score) {
+		while (last_score == arr[index].sum_score) {
 			extraout << arr[index].name + " " + arr[index].birth + " " << arr[index].sum_score << endl;
 			index++;
 		}
-		cout << arr[index + 1].sum_score;
 		extraout.close();
 	}
 	
@@ -81,7 +80,7 @@ void output_students(Abiturient* arr) {
 int main()
 {
 	int n;
-	Abiturient* arr = new Abiturient[1000000];
+	Abiturient arr[100];
 	n = fill_arrray(arr);
 	sort_abiturients(arr, n);
 	output_students(arr);
